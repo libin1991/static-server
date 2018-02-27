@@ -1,0 +1,31 @@
+#! /usr/bin/env node
+
+const yargs = require('yargs')
+const Server = require('../src/app')
+
+let argv = yargs.options('d',{
+    alias:'root',
+    demand:'false',
+    type:'string',
+    default:process.cwd(),
+    desription:'静态文件根目录'
+}).options('o',{
+    alias:'host',
+    demand:'false',
+    type:'string',
+    default:'loaclhost',
+    desription:'请配置监听主机'
+}).options('p',{
+    alias:'port',
+    demand:'false',
+    type:'number',
+    default:8080,
+    desription:'请配置端口号'
+})
+.usage('static-start [options]')
+.example('static-start -d / -p 9000 -o localhost')
+.help('h')
+.argv
+
+let server = new Server(argv)
+server.start()
